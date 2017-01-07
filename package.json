@@ -1,0 +1,29 @@
+{
+  "name": "angular1.x-spa-project",
+  "version": "1.0.0",
+  "description": "angular1.x-spa-project-starter",
+  "author": "hexson",
+  "scripts": {},
+  "dependencies": {
+    "angular": "^1.6.2",
+    "angular-toastr": "^2.1.1",
+    "angular-ui-router": "^0.4.2",
+    "ng-dialog": "^1.0.0",
+    "ng-file-upload": "^12.2.13",
+    "ngstorage": "^0.3.11",
+    "oclazyload": "^1.1.0"
+  },
+  "devDependencies": {
+    "grunt": "^1.0.1",
+    "grunt-contrib-clean": "^1.0.0",
+    "grunt-contrib-concat": "^1.0.1",
+    "grunt-contrib-connect": "^1.0.2",
+    "grunt-contrib-copy": "^1.0.0",
+    "grunt-contrib-cssmin": "^2.0.0",
+    "grunt-contrib-imagemin": "^1.0.1",
+    "grunt-contrib-jshint": "^1.1.0",
+    "grunt-contrib-less": "^1.4.0",
+    "grunt-contrib-uglify": "^2.1.0",
+    "grunt-contrib-watch": "^1.0.0"
+  }
+}
