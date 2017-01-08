@@ -4,8 +4,9 @@
   "description": "angular1.x-spa-project-starter",
   "author": "hexson",
   "scripts": {
-    "start": "npm run build && grunt connect:server:keepalive",
-    "build": "start grunt"
+    "dev": "set NODE_ENV=development && start grunt && grunt connect:server:keepalive",
+    "build": "set NODE_ENV=production && grunt",
+    "grunt": "set NODE_ENV=development && grunt"
   },
   "dependencies": {
     "angular": "^1.6.2",
