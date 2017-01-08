@@ -1,5 +1,89 @@
+var isDev = (function(){
+  return process.env.NODE_ENV.trim() === 'development';
+})();
+
+var isProd = (function(){
+  return process.env.NODE_ENV.trim() === 'production';
+})();
+
 module.exports = function (grunt) {
-  var watchDelayMs = 100;
+  var watchDelayMs = 200;
+  var copy = {
+    main: {
+      files: [
+        {
+          expand: true,
+          cwd: 'src',
+          src: '**/*.{html,htm}',
+          dest: 'dist'
+        }
+      ]
+    },
+    lib: {
+      files: [
+        {
+          expand: true,
+          cwd: 'node_modules/angular',
+          src: 'angular.min.js',
+          dest: 'dist/js/angular'
+        },
+        {
+          expand: true,
+          cwd: 'node_modules/angular-toastr/dist',
+          src: '*.{js,css}',
+          dest: 'dist/js/angular-toastr'
+        },
+        {
+          expand: true,
+          cwd: 'node_modules/angular-ui-router/release',
+          src: 'angular-ui-router.min.js',
+          dest: 'dist/js/angular-ui-router'
+        },
+        {
+          expand: true,
+          cwd: 'node_modules/ng-dialog/js',
+          src: 'ngDialog.min.js',
+          dest: 'dist/js/ng-dialog'
+        },
+        {
+          expand: true,
+          cwd: 'node_modules/ng-dialog/css',
+          src: '**/*.css',
+          dest: 'dist/js/ng-dialog'
+        },
+        {
+          expand: true,
+          cwd: 'node_modules/ng-file-upload/dist',
+          src: '*.*',
+          dest: 'dist/js/ng-file-upload'
+        },
+        {
+          expand: true,
+          cwd: 'node_modules/ngstorage',
+          src: 'ngStorage.min.js',
+          dest: 'dist/js/ngstorage'
+        },
+        {
+          expand: true,
+          cwd: 'node_modules/oclazyload/dist',
+          src: 'ocLazyLoad.min.js',
+          dest: 'dist/js/oclazyload'
+        }
+      ]
+    }
+  };
+  if (isDev) {
+    copy.controller = {
+      files: [
+        {
+          expand: true,
+          cwd: 'src',
+          src: ['**/*.js', '!*.js'],
+          dest: 'dist'
+        }
+      ]
+    };
+  }
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
     clean: {
@@ -22,22 +106,30 @@ module.exports = function (grunt) {
     },
     uglify: {
       options: {
+        exportAll: true,
         stripBanners: true,
-        banner: '// <%= pkg.name %> - <%= pkg.author %> - v<%= pkg.version %> - <%= grunt.template.today("yyyy-mm-dd hh:MM:ss") %>\n',
+        banner: '/*! <%= pkg.name %> - <%= pkg.author %> - v<%= pkg.version %> - <%= grunt.template.today("yyyy-mm-dd hh:MM:ss") %> */\n',
       },
       comparejs: {
         files: [
           {
             expand: true,
             cwd: 'src',
-            src: '*/*.js',
+            src: ['**/*.js', '!*.js'],
             dest: 'dist',
             ext: '.js'
           },
-          {
-            'dist/main.js': ['<%= concat.dist.dest %>']
-          }
+          // uglify plan A
+          // {
+          //   'dist/main.js': ['<%= concat.dist.dest %>']
+          // }
         ]
+      },
+      // uglify plan B
+      mainjs: {
+        files: {
+          'dist/main.js': ['<%= concat.dist.dest %>']
+        }
       }
     },
     less: {
@@ -77,24 +169,7 @@ module.exports = function (grunt) {
         ]
       }
     },
-    copy: {
-      main: {
-        files: [
-          {
-            expand: true,
-            cwd: 'src',
-            src: '**/*.{html,htm}',
-            dest: 'dist'
-          },
-          {
-            expand: true,
-            cwd: 'node_modules/angular',
-            src: 'angular.min.js',
-            dest: 'dist/js/angular'
-          }
-        ]
-      }
-    },
+    copy: copy,
     connect: {
       server: {
         options: {
@@ -109,13 +184,14 @@ module.exports = function (grunt) {
       }
     },
     watch: {
-      jshint: {
-        files: 'src/**/*.js',
-        tasks: ['jshint:build'],
-        options: {
-          debounceDelay: watchDelayMs
-        }
-      },
+      /* isDev === true => disable jshint */
+      // jshint: {
+      //   files: 'src/**/*.js',
+      //   tasks: ['jshint:build'],
+      //   options: {
+      //     debounceDelay: watchDelayMs
+      //   }
+      // },
       copy: {
         files: 'src/**/*.{html,htm}',
         tasks: ['copy:main'],
@@ -130,13 +206,30 @@ module.exports = function (grunt) {
           debounceDelay: watchDelayMs
         }
       },
-      uglify: {
-        files: ['src/*/*.js', 'dist/main.js'],
-        tasks: ['uglify:comparejs'],
-        options: {
-          debounceDelay: watchDelayMs
-        }
-      },
+      /* isDev === true => disable uglify */
+      // uglify plan A
+      // uglify: {
+      //   files: 'src/**/*.js',
+      //   tasks: ['uglify:comparejs'],
+      //   options: {
+      //     debounceDelay: watchDelayMs
+      //   }
+      // },
+      // uglify plan B
+      // uglify1: {
+      //   files: ['src/**/*.js', '!src/*.js'],
+      //   tasks: ['uglify:comparejs'],
+      //   options: {
+      //     debounceDelay: watchDelayMs
+      //   }
+      // },
+      // uglify2: {
+      //   files: 'src/*.js',
+      //   tasks: ['uglify:mainjs'],
+      //   options: {
+      //     debounceDelay: watchDelayMs
+      //   }
+      // },
       imagemin: {
         files: 'src/img/*.{jpg,png,gif}',
         tasks: ['imagemin:dynamic'],
@@ -170,5 +263,14 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-contrib-less');
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-watch');
-  grunt.registerTask('default', ['clean', 'jshint', 'copy', 'concat', 'uglify', 'imagemin', 'less', 'cssmin', 'watch']);
+  grunt.log.writeln(grunt.initConfig.copy);
+  var Task = ['clean', 'copy', 'concat', 'imagemin', 'less', 'cssmin'];
+  if (isDev) {
+    Task.push('watch');
+  }
+  if (isProd) {
+    Task.splice(1, 0, 'jshint');
+    Task.splice(4, 0, 'uglify');
+  }
+  grunt.registerTask('default', Task);
 }
