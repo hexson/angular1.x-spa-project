@@ -3,7 +3,10 @@
   "version": "1.0.0",
   "description": "angular1.x-spa-project-starter",
   "author": "hexson",
-  "scripts": {},
+  "scripts": {
+    "start": "npm run build && grunt connect:server:keepalive",
+    "build": "start grunt"
+  },
   "dependencies": {
     "angular": "^1.6.2",
     "angular-toastr": "^2.1.1",
@@ -24,6 +27,7 @@
     "grunt-contrib-jshint": "^1.1.0",
     "grunt-contrib-less": "^1.4.0",
     "grunt-contrib-uglify": "^2.1.0",
-    "grunt-contrib-watch": "^1.0.0"
+    "grunt-contrib-watch": "^1.0.0",
+    "open": "^0.0.5"
   }
 }
