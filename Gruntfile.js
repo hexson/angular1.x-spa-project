@@ -1,5 +1,3 @@
-// var angular = require('./node_modules/angular/');
-// import angular from './node_modules/angular';
 module.exports = function (grunt) {
   var watchDelayMs = 100;
   grunt.initConfig({
@@ -101,7 +99,12 @@ module.exports = function (grunt) {
       server: {
         options: {
           port: 8080,
-          base: 'dist'
+          base: 'dist',
+          open: {
+            target: 'http://localhost:8080',
+            appName: 'open',
+            callback: function () {}
+          }
         }
       }
     },
