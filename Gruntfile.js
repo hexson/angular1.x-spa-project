@@ -243,14 +243,14 @@ module.exports = function (grunt) {
         options: {
           debounceDelay: watchDelayMs
         }
-      },
-      cssmin: {
-        files: 'dist/css/*.css',
-        tasks: ['cssmin:target'],
-        options: {
-          debounceDelay: watchDelayMs
-        }
-      }
+      }//,
+      // cssmin: {
+      //   files: 'dist/css/*.css',
+      //   tasks: ['cssmin:target'],
+      //   options: {
+      //     debounceDelay: watchDelayMs
+      //   }
+      // }
     }
   });
   grunt.loadNpmTasks('grunt-contrib-clean');
@@ -264,13 +264,14 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.log.writeln(grunt.initConfig.copy);
-  var Task = ['clean', 'copy', 'concat', 'imagemin', 'less', 'cssmin'];
+  var Task = ['clean', 'copy', 'concat', 'imagemin', 'less'];
   if (isDev) {
     Task.push('watch');
   }
   if (isProd) {
     Task.splice(1, 0, 'jshint');
     Task.splice(4, 0, 'uglify');
+    Task.push('cssmin');
   }
   grunt.registerTask('default', Task);
 }
