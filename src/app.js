@@ -10,8 +10,7 @@
     'config'
   ])
   .config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$ocLazyLoadProvider', '$httpProvider', '$compileProvider', 'routes', function($stateProvider, $urlRouterProvider, $locationProvider, $ocLazyLoadProvider, $httpProvider, $compileProvider, routes){
-    console.log(routes);
-    $urlRouterProvider.otherwise('/main');
+    $urlRouterProvider.otherwise('/main/index');
     $stateProvider.state('main', {
       url: '/main',
       views: {
@@ -51,7 +50,6 @@
           }
         }
       });
-      console.log(route, routes[route]);
     }
     /* jshint ignore:end */
   }])
