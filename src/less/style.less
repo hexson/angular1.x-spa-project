@@ -1,8 +1,69 @@
 @w: 100%;
+@c: #61baff;
+@bc: #09253b;
 
+.formatting-pm(){
+  margin: 0;
+  padding: 0;
+}
 html,body {
   width: @w;
   height: @w;
-  margin: 0;
-  padding: 0;
+  .formatting-pm();
+}
+p {
+  .formatting-pm();
+}
+img {
+  border: 0;
+}
+
+.header {
+  width: @w;
+  height: 60px;
+  background-color: @c;
+  position: fixed;
+  left: 0;
+  top: 0;
+  .header-title {
+    width: 1100px;
+    line-height: 60px;
+    margin: 0 auto;
+    font-size: 16px;
+    color: #fff;
+  };
+}
+.footer {
+  width: @w;
+  height: 60px;
+  padding: 30px 0;
+  background-color: @bc;
+  color: #fff;
+  .footer-context {
+    text-align: center;
+    line-height: 30px;
+    font-size: 12px;
+  };
+}
+.main {
+  padding-top: 60px;
+}
+.banner {
+  width: @w;
+  background-color: @c;
+  color: #fff;
+}
+.banner-con {
+  width: 1100px;
+  margin: 0 auto;
+  overflow: hidden;
+}
+.banner-left,.banner-right {
+  width: 50%;
+  float: left;
+}
+.banner-right {
+  height: 500px;
+  background: url('http://wx3.sinaimg.cn/large/005EkSOcgy1fcy9iqfyphj30l2084gm9.jpg') no-repeat center;
+  background-size: 80%;
 }
