@@ -10,6 +10,7 @@
     'config'
   ])
   .config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$ocLazyLoadProvider', '$httpProvider', '$compileProvider', 'routes', function($stateProvider, $urlRouterProvider, $locationProvider, $ocLazyLoadProvider, $httpProvider, $compileProvider, routes){
+    console.log(routes);
     $urlRouterProvider.otherwise('/main/index');
     $stateProvider.state('main', {
       url: '/main',
@@ -25,7 +26,7 @@
         }
       },
       resolve: {
-        loadMyFile: function($ocLazyLoad){
+        loadMyFile: ['$ocLazyLoad', function($ocLazyLoad){
           return $ocLazyLoad.load({
             name: 'app',
             files: [
@@ -33,7 +34,7 @@
               'components/footer/footer.js'
             ]
           });
-        }
+        }]
       }
     });
     /* jshint ignore:start */
@@ -42,14 +43,15 @@
         url: routes[route].url || ('/' + route),
         templateUrl: routes[route].templateUrl || ('pages/' + route + '/' + route + '.html'),
         resolve: {
-          loadMyFile: function($ocLazyLoad){
+          loadMyFile: ['$ocLazyLoad', function($ocLazyLoad){
             return $ocLazyLoad.load({
               name: 'app',
               files: routes[route].files || ['pages/' + route + '/' + route + '.js']
             });
-          }
+          }]
         }
       });
+      console.log(route, routes[route]);
     }
     /* jshint ignore:end */
   }])
