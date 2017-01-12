@@ -98,7 +98,6 @@ gulp.task('server', ['less'], function(){
     },
     port: 8000
   });
-  console.log(reload);
   gulp.watch("app/less/*.less", ['less']);
   gulp.watch(['src/**/*', '!src/less/*.less']).on('change', reload);
 });
