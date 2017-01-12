@@ -9,12 +9,14 @@ var uglifycss = require('gulp-uglifycss');
 var reload = browserSync.reload;
 
 
+var NODE_ENV = process.env.NODE_ENV || '';
+
 var isDev = function(){
-  return process.env.NODE_ENV.trim() === 'development';
+  return NODE_ENV.trim() === 'development';
 }();
 
 var isProd = function(){
-  return process.env.NODE_ENV.trim() === 'production';
+  return NODE_ENV.trim() === 'production';
 }();
 
 
