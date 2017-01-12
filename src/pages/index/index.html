@@ -2,9 +2,23 @@
   <div class="banner">
     <div class="banner-con">
       <div class="banner-left">
-        <span>打造一个简单易上手的 spa 页面应用脚手架</span>
+        <span>{{showText}}</span>
+        <small>常用的插件集成，目的在帮助你快速构建一个拥有组件化、模块化、工程化、易调试的SPA应用。</small>
       </div>
       <div class="banner-right"></div>
     </div>
+  </div>
+  <div class="con-des">
+    <h3># 启动脚手架之前</h3>
+    <p class="mt20">缘由是因公司前端采用了Angular1.x驱动，在开发数据管理系统、VR App store、开发者平台及社区等的过程中，优化并总结出来的一套快速的前端开发流程及架构。在尝试grunt和gulp的过程中，发现gulp基于流的文件I/O过程速度很快，基本在ms级别甚至以下，而grunt速度就追赶不及，grunt在处理中间件的时候是采用的磁盘读写，gulp是内存，所以最后我用了gulp。熟悉喜欢grunt的也可以在分支中查看具体配置。</p>
+    <h3 class="mt30"># 准备工作</h3>
+    <p class="mt20">安装node.js和npm，我的安装版本为：<code>node -v</code> <code>v6.9.2</code>，<code>npm -v</code> <code>3.10.9</code></p>
+    <h3 class="mt30"># 启动</h3>
+    <p class="mt20">装载gulp和依赖包 <code>npm install gulp -g</code>，<code>npm install</code></p>
+    <blockquote class="mt5">这里会把gulp安装在全局；依赖包仅装载在项目主目录下。</blockquote>
+    <p class="mt20">开发环境搭建 <code>npm run dev</code></p>
+    <blockquote class="mt5">执行此命令后，会自动创建一个拥有live-reloading和CSS注入的服务器，并且会自动打开你的默认浏览器来呈现你的页面 (http://localhost:8000)，当你在改动文件时，会刷新重绘你的网页；当你在改动像Less这种CSS预处理器的时候，会自动注入新的CSS来重新渲染页面，而不用对整个网页进行重载。所有文件会进行一些处理暂存在dist文件夹中。</blockquote>
+    <p class="mt20">生产环境发布 <code>npm run build</code></p>
+    <blockquote class="mt5">执行此命令后，会对src文件夹中的文件以脚手架的配置进行合并、编译、压缩等等的优化，以便更适应生产环境，提高性能。发布后的文件全部打包进dist文件夹中，对你在开发中的文件及二次开发不会造成影响，最后，以dist文件夹创建一个web server即可。</blockquote>
   </div>
 </div>
