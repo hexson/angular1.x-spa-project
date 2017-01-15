@@ -26,8 +26,10 @@ gulp.task('clean', function(cb){
 });
 
 gulp.task('copy:html', function(){
-  gulp.src('src/**/*.{html,htm}')
+  gulp.src(['src/**/*.{html,htm}', '!src/index.html'])
       .pipe(gulp.dest('dist/'));
+  gulp.src('src/index.html')
+      .pipe(gulp.dest('./'));
 });
 
 gulp.task('copy:lib', function(){
@@ -96,7 +98,7 @@ gulp.task('uglify:pagejs', function(){
 gulp.task('server', ['less'], function(){
   browserSync({
     server: {
-      baseDir: 'dist'
+      baseDir: './'
     },
     port: 8000
   });
