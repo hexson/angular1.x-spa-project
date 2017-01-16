@@ -1,4 +1,4 @@
 # npm module
 /node_modules
 # build folder
-/dist
+# /dist
