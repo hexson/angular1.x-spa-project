@@ -77,6 +77,13 @@ h1,h2,h3,h4,h5,h6 {
   .formatting-pm();
   color: @bc;
 }
+ul,li {
+  list-style: none;
+  .formatting-pm();
+}
+a {
+  text-decoration: none;
+}
 code {
   padding: 1px 6px;
   font-size: 85%;
@@ -109,6 +116,21 @@ blockquote {
     margin: 0 auto;
     font-size: 16px;
     color: #fff;
+    span {
+      cursor: pointer;
+    };
+  };
+}
+.header-nav {
+  float: right;
+  li {
+    display: inline-block;
+    padding: 10px 0;
+    line-height: 40px;
+    a {
+      display: inline-block;
+      color: #fff;
+    }
   };
 }
 .footer {
