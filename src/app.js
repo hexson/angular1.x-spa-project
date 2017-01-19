@@ -9,8 +9,7 @@
     'toastr',
     'config'
   ])
-  .config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$ocLazyLoadProvider', '$httpProvider', '$compileProvider', 'routes', 'statics', function($stateProvider, $urlRouterProvider, $locationProvider, $ocLazyLoadProvider, $httpProvider, $compileProvider, routes, statics){
-    // console.log(routes);
+  .config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$ocLazyLoadProvider', '$httpProvider', '$compileProvider', 'statics', function($stateProvider, $urlRouterProvider, $locationProvider, $ocLazyLoadProvider, $httpProvider, $compileProvider, statics){
     $urlRouterProvider.otherwise('/main/index');
     $urlRouterProvider.when('/main', '/main/index');
     $stateProvider.state('main', {
@@ -38,11 +37,43 @@
         }]
       }
     });
+    // .state('main.index', {
+    //   url: '/index',
+    //   templateUrl: statics.path + 'pages/index/index.html',
+    //   resolve: {
+    //     loadMyFile: ['$ocLazyLoad', function($ocLazyLoad){
+    //       return $ocLazyLoad.load({
+    //         name: 'app',
+    //         files: statics.path + 'pages/index/index.js'
+    //       })
+    //     }]
+    //   }
+    // });
+    /* state config */
+    // console.log(stateConf('index'));
+    // function stateConf(route){
+    //   return {
+    //     url: '/' + route,
+    //     templateUrl: statics.path + 'pages/' + route + '/' + route + '.html',
+    //     resolve: {
+    //       loadMyFile: ['$ocLazyLoad', function($ocLazyLoad){
+    //         return $ocLazyLoad.load({
+    //           name: 'app',
+    //           files: statics.path + 'pages/' + route + '/' + route + '.js'
+    //         });
+    //       }]
+    //     }
+    //   };
+    // };
     /* jshint ignore:start */
+    var routes = {
+      index: {}
+    };
     for (var route in routes){
-      $stateProvider.state('main.' + route, {
+      router.state('main.' + route, {
         url: routes[route].url || ('/' + route),
         templateUrl: routes[route].templateUrl || (statics.path + 'pages/' + route + '/' + route + '.html'),
+        controller: route,
         resolve: {
           loadMyFile: ['$ocLazyLoad', function($ocLazyLoad){
             return $ocLazyLoad.load({
@@ -52,7 +83,7 @@
           }]
         }
       });
-      // console.log(route, routes[route]);
+      console.log(route, routes[route]);
     }
     /* jshint ignore:end */
   }])
