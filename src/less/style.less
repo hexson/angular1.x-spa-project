@@ -1,6 +1,6 @@
 @w: 100%;
-@c: #61baff;
-@bc: #09253b;
+@ac: #61baff;
+@hc: #20A0FF;
 @fc: #475669;
 @bc: #324057;
 @lc: #8492A6;
@@ -85,7 +85,7 @@ a {
   text-decoration: none;
 }
 code {
-  padding: 1px 6px;
+  padding: 3px 6px;
   font-size: 85%;
   border-radius: 3px;
   font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
@@ -105,7 +105,7 @@ blockquote {
 .header {
   width: @w;
   height: 60px;
-  background-color: @c;
+  background-color: @ac;
   position: fixed;
   left: 0;
   top: 0;
@@ -150,10 +150,10 @@ blockquote {
 }
 .banner {
   width: @w;
-  background-color: #20A0FF;
+  background-color: @hc;
   color: #fff;
 }
-.banner-con {
+.banner-con,.frame {
   width: 1100px;
   margin: 0 auto;
   overflow: hidden;
@@ -203,6 +203,58 @@ blockquote {
   color: @fc;
   p {
     line-height: 30px;
+  }
+}
+.frame {
+  padding: 50px 0;
+}
+.frame-nav {
+  width: 200px;
+  float: left;
+  h3 {
+    font-size: 18px;
+    font-weight: normal;
+    line-height: 30px;
+    margin-bottom: 20px;
+    color: @fc;
+  }
+  .frame-nav-item {
+    margin-bottom: 20px;
+    li {
+      padding-left: 30px;
+      margin-bottom: 10px;
+    }
+    a {
+      font-size: 14px;
+      line-height: 30px;
+      display: inline-block;
+      width: @w;
+      color: @fc;
+      &:hover {
+        color: @hc;
+      };
+    }
+    .active {
+      color: @hc;
+    }
+  }
+}
+.frame-con {
+  margin-left: 200px;
+}
+.item-con-title {
+  line-height: 30px;
+}
+.item-con-art {
+  padding: 30px 0;
+  font-size: 15px;
+  line-height: 30px;
+  h4 {
+    line-height: 40px;
+    margin-bottom: 10px;
+  }
+  li {
+    margin-bottom: 10px;
   }
 }
 
