@@ -2,7 +2,7 @@
   'use strict';
 
   angular.module('app')
-  .controller('index', ['$scope', '$timeout', function(vm, $timeout){
+  .controller('indexctr', ['$scope', '$timeout', function(vm, $timeout){
     vm.text = '一个简单易上手的SPA页面应用脚手架:';
     vm.showText = '';
     vm.attrsObject = {
@@ -16,7 +16,7 @@
         vm.showText = vm.text.substr(0, len);
         $timeout(function(){
           vm.showTextFn();
-        }, 200);
+        }, 150);
       }else {
         $timeout(function(){
           vm.showTextFnAfter();
