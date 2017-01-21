@@ -1,6 +1,9 @@
 var gulp = require('gulp');
 var del = require('del');
+var through2 = require('through2');
 var browserSync = require('browser-sync');
+var rev = require('gulp-rev');
+var revReplace = require('gulp-rev-replace');
 var concat = require('gulp-concat');
 var imagemin = require('gulp-imagemin');
 var less = require('gulp-less');
@@ -21,15 +24,29 @@ var isProd = function(){
 
 
 gulp.task('clean', function(cb){
-  var stream = del(['dist/**/*'], cb);
+  var stream = del(['dist/**/*', 'rev-manifest.json'], cb);
   return stream;
 });
 
 gulp.task('copy:html', function(){
-  gulp.src(['src/**/*.{html,htm}', '!src/index.html'])
-      .pipe(gulp.dest('dist/'));
   gulp.src('src/index.html')
       .pipe(gulp.dest('./'));
+  gulp.src(['src/**/*.{html,htm}', '!src/index.html'])
+      .pipe(gulp.dest('dist/'));
+});
+
+gulp.task('copy:hash:html', ['less:uglifycss'], function(){
+  gulp.src('src/index.html')
+      .pipe(revReplace({manifest: gulp.src('dist/css/css-manifest.json')}))
+      .pipe(gulp.dest('./'));
+  return gulp.src(['src/**/*.{html,htm}', '!src/index.html'])
+      .pipe(rev())
+      .pipe(gulp.dest('dist/'))
+      .pipe(rev.manifest({
+        base: 'dist',
+        merge: true
+      }))
+      .pipe(gulp.dest('dist/'));
 });
 
 gulp.task('copy:lib', function(){
@@ -65,9 +82,12 @@ gulp.task('less', function(){
 });
 
 gulp.task('less:uglifycss', function(){
-  gulp.src('src/less/*')
+  return gulp.src('src/less/*')
       .pipe(less())
       .pipe(uglifycss())
+      .pipe(rev())
+      .pipe(gulp.dest('dist/css/'))
+      .pipe(rev.manifest('css-manifest.json'))
       .pipe(gulp.dest('dist/css/'));
 });
 
@@ -77,10 +97,12 @@ gulp.task('concat:appjs', function(){
       .pipe(gulp.dest('dist/'));
 });
 
-gulp.task('uglify:concat:appjs', function(){
+gulp.task('uglify:concat:appjs', ['copy:hash:html', 'uglify:pagejs'], function(){
   gulp.src(['src/app.config.js', 'src/app.js', 'src/app.filter.js', 'src/app.services.js'])
       .pipe(uglify())
       .pipe(concat('app.js'))
+      .pipe(modify(version))
+      .pipe(revReplace({manifest: gulp.src('./rev-manifest.json')}))
       .pipe(gulp.dest('dist/'));
 });
 
@@ -90,8 +112,14 @@ gulp.task('copy:pagejs', function(){
 });
 
 gulp.task('uglify:pagejs', function(){
-  gulp.src(['src/**/*.js', '!src/*.js'])
+  return gulp.src(['src/**/*.js', '!src/*.js'])
       .pipe(uglify())
+      .pipe(rev())
+      .pipe(gulp.dest('dist/'))
+      .pipe(rev.manifest({
+        base: 'dist',
+        merge: true
+      }))
       .pipe(gulp.dest('dist/'));
 });
 
@@ -114,12 +142,25 @@ gulp.task('watch', function(){
   gulp.watch(['src/**/*.js', '!src/*.js'], ['copy:pagejs']);
 });
 
-var taskList = ['copy:lib', 'copy:html', 'imagemin'];
+var taskList = ['copy:lib', 'imagemin'];
 
 if (isProd){
-  taskList.push('less:uglifycss', 'uglify:concat:appjs', 'uglify:pagejs');
+  taskList.push('copy:hash:html', 'less:uglifycss', 'uglify:concat:appjs', 'uglify:pagejs');
 }else {
-  taskList.push('less', 'concat:appjs', 'copy:pagejs', 'server', 'watch');
+  taskList.push('copy:html', 'less', 'concat:appjs', 'copy:pagejs', 'server', 'watch');
+}
+
+function modify(modifier){
+  return through2.obj(function(file, encoding, done){
+    var content = modifier(String(file.contents));
+    file.contents = new Buffer(content);
+    this.push(file);
+    done();
+  });
+}
+
+function version(data){
+  return data.replace(/__VERSION__/, 'v1.0.0');
 }
 
 
