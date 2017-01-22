@@ -27,6 +27,10 @@ gulp.task('clean', function(cb){
   var stream = del(['dist/**/*', 'rev-manifest.json'], cb);
   return stream;
 });
+gulp.task('clean:rev:json', function(cb){
+  var stream = del(['rev-manifest.json', 'dist/**/*-manifest.json'], cb);
+  return stream;
+});
 
 gulp.task('copy:html', function(){
   gulp.src('src/index.html')
