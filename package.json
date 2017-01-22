@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "npm run clean && cross-env NODE_ENV=development gulp",
     "build": "npm run clean && cross-env NODE_ENV=production gulp",
-    "clean": "gulp clean"
+    "clean": "gulp clean",
     "del": "gulp clean:rev:json"
   },
   "dependencies": {
