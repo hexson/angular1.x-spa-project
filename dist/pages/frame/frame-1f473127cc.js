@@ -1,0 +1,1 @@
+!function(){"use strict";angular.module("app").controller("framectr",["$scope",function(t){t.text="一个简单易上手的SPA页面应用脚手架:"}])}();

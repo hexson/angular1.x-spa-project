@@ -1,1 +1,0 @@
-!function(){"use strict";angular.module("app").controller("header",["$scope","$state",function(e,n){e.header="header",e.goIndex=function(){n.go("main.index")}}])}();
