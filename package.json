@@ -5,7 +5,7 @@
   "author": "hexson",
   "scripts": {
     "dev": "npm run clean && cross-env NODE_ENV=development gulp",
-    "build": "npm run clean && cross-env NODE_ENV=production gulp",
+    "build": "npm run clean && cross-env NODE_ENV=production gulp && npm run del",
     "clean": "gulp clean",
     "del": "gulp clean:rev:json"
   },
