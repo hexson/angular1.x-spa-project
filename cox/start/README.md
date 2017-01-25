@@ -1,6 +1,8 @@
+### 起步
+
 #### # 开发目录：src
 
-```
+```text
 |- components/ ----------- 组件
 |- css/ ------------------ CSS(如果有)
 |- less/ ----------------- LessCSS
@@ -56,7 +58,7 @@ angular.module('app')
 angular.module('app')
 .service('utils', ['$http', function($http){
   this.getList = function(success, error){
-    success && $http.get('xxx/apiurl').success(success).error(error || function(){/* default error fn */});
+    success && $http.get('xxx/apiurl').success(success).error(error || function(){ /* default error fn */ });
   };
 }])
 // 使用自定义服务
