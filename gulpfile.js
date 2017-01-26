@@ -39,9 +39,9 @@ gulp.task('copy:html', function(){
       .pipe(gulp.dest('dist/'));
 });
 
-gulp.task('copy:hash:html', ['less:uglifycss'], function(){
+gulp.task('copy:hash:html', ['css:less:uglifycss'], function(){
   gulp.src('src/index.html')
-      .pipe(revReplace({manifest: gulp.src('dist/css/css-manifest.json')}))
+      .pipe(revReplace({manifest: gulp.src('dist/css/*ss-manifest.json')}))
       .pipe(gulp.dest('./'));
   return gulp.src(['src/**/*.{html,htm}', '!src/index.html'])
       .pipe(rev())
@@ -78,20 +78,29 @@ gulp.task('imagemin', function(){
       .pipe(gulp.dest('dist/img/'));
 });
 
-gulp.task('less', function(){
+gulp.task('css:less', function(){
+  gulp.src('src/css/*')
+      .pipe(gulp.dest('dist/css/'))
+      .pipe(reload({stream: true}));
   gulp.src('src/less/*')
       .pipe(less())
       .pipe(gulp.dest('dist/css/'))
       .pipe(reload({stream: true}));
 });
 
-gulp.task('less:uglifycss', function(){
+gulp.task('css:less:uglifycss', function(){
+  gulp.src('src/css/*')
+      .pipe(uglifycss())
+      .pipe(rev())
+      .pipe(gulp.dest('dist/css/'))
+      .pipe(rev.manifest('css-manifest.json'))
+      .pipe(gulp.dest('dist/css/'));
   return gulp.src('src/less/*')
       .pipe(less())
       .pipe(uglifycss())
       .pipe(rev())
       .pipe(gulp.dest('dist/css/'))
-      .pipe(rev.manifest('css-manifest.json'))
+      .pipe(rev.manifest('less-manifest.json'))
       .pipe(gulp.dest('dist/css/'));
 });
 
@@ -127,21 +136,21 @@ gulp.task('uglify:pagejs', function(){
       .pipe(gulp.dest('dist/'));
 });
 
-gulp.task('server', ['less'], function(){
+gulp.task('server', ['css:less'], function(){
   browserSync({
     server: {
       baseDir: './'
     },
     port: 8000
   });
-  gulp.watch("app/less/*.less", ['less']);
+  gulp.watch("app/less/*.less", ['css:less']);
   gulp.watch(['src/**/*', '!src/less/*.less']).on('change', reload);
 });
 
 gulp.task('watch', function(){
   gulp.watch('src/**/*.{html,htm}', ['copy:html']);
   gulp.watch('src/img/*', ['imagemin']);
-  gulp.watch('src/less/*', ['less']);
+  gulp.watch(['src/less/*', 'src/css/*'], ['css:less']);
   gulp.watch(['src/app.config.js', 'src/app.js', 'src/app.filter.js', 'src/app.services.js'], ['concat:appjs']);
   gulp.watch(['src/**/*.js', '!src/*.js'], ['copy:pagejs']);
 });
@@ -149,9 +158,9 @@ gulp.task('watch', function(){
 var taskList = ['copy:lib', 'imagemin'];
 
 if (isProd){
-  taskList.push('copy:hash:html', 'less:uglifycss', 'uglify:concat:appjs', 'uglify:pagejs');
+  taskList.push('copy:hash:html', 'css:less:uglifycss', 'uglify:concat:appjs', 'uglify:pagejs');
 }else {
-  taskList.push('copy:html', 'less', 'concat:appjs', 'copy:pagejs', 'server', 'watch');
+  taskList.push('copy:html', 'css:less', 'concat:appjs', 'copy:pagejs', 'server', 'watch');
 }
 
 function modify(modifier){
