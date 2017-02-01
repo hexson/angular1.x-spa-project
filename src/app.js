@@ -53,7 +53,7 @@
           loadMyFile: ['$ocLazyLoad', function($ocLazyLoad){
             return $ocLazyLoad.load({
               name: 'app',
-              files: (typeof jsfiles === 'string' ? [statics.path + jsfiles] : jsfiles)
+              files: (typeof jsfiles === 'string' ? [statics.path + jsfiles] : (jsfiles || []))
             });
           }]
         }
