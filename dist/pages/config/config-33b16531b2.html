@@ -1,0 +1,120 @@
+<div class="item-con-art" ng-controller="configctr">
+
+
+<h3>配置</h3>
+<h4># 路由配置</h4>
+<p>单页面应用的路由：先加载插件资源，然后在app module里注入router和lazyLoad模块，再进行具体的配置 *
+
+</p>
+<pre><code class="lang-html">&lt;!-- 加载插件资源 --&gt;
+&lt;script src="dist/js/angular-ui-router/angular-ui-router.min.js"&gt;&lt;/script&gt;
+&lt;script src="dist/js/oclazyload/ocLazyLoad.min.js"&gt;&lt;/script&gt;</code></pre>
+<pre><code class="lang-javascript">// 注入router和lazyLoad模块
+angular.module('app', [
+  'ui.router',
+  'oc.lazyLoad',
+  'config'
+])
+// 配置路由
+.config([
+  '$stateProvider',
+  '$urlRouterProvider',
+  '$ocLazyLoadProvider',
+  'statics',
+  function($stateProvider, $urlRouterProvider, $ocLazyLoadProvider, statics){
+    // 设置默认路由
+    $urlRouterProvider.otherwise('/main/index');
+    // 设置重定向路由
+    $urlRouterProvider.when('/main', '/main/index');
+    // 配置主体路由
+    $stateProvider.state('main', {
+      url: '/main',
+      // 配置公用组件
+      views: {
+        '': {
+          templateUrl: statics.path + 'pages/main/main.html'
+        },
+        '@header': {
+          templateUrl: statics.path + 'components/header/header.html'
+        },
+        '@footer': {
+          templateUrl: statics.path + 'components/footer/footer.html'
+        }
+      },
+      resolve: {
+        // 懒加载静态资源
+        loadMyFile: ['$ocLazyLoad', function($ocLazyLoad){
+          return $ocLazyLoad.load({
+            name: 'app',
+            files: [
+              statics.path + 'components/header/header.js',
+              statics.path + 'components/footer/footer.js'
+            ]
+          });
+        }]
+      }
+    })
+    // 配置其他路由
+    .state('main.other', {
+      url: '/other',
+      templateUrl: statics.path + 'xxx/url/other.html',
+      resolve: {
+        loadMyFile: ['$ocLazyLoad', function($ocLazyLoad){
+          return $ocLazyLoad.load({
+            name: 'app',
+            files: [statics.path + 'xxx/url//other.js']
+          });
+        }]
+      }
+    });
+  }
+]);</code></pre>
+<h4># AJAX配置</h4>
+<p>全局的AJAX配置：
+
+</p>
+<pre><code class="lang-javascript">app.config([
+  '$stateProvider',
+  '$urlRouterProvider',
+  '$ocLazyLoadProvider',
+  '$httpProvider',
+  'statics',
+  function($stateProvider, $urlRouterProvider, $ocLazyLoadProvider, $httpProvider, statics){
+    /* 路由配置... */
+
+    // 改变angular默认的POST请求配置
+    $httpProvider.defaults.transformRequest = function(obj){
+      var str = [];
+      for (var p in obj){
+        str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+      }
+      return str.join("&amp;");
+    };
+    $httpProvider.defaults.headers.post = {
+      'Content-Type': 'application/x-www-form-urlencoded'
+    };
+    $httpProvider.interceptors.push(['$rootScope', function($rootScope){ // 依赖注入
+      return {
+        request: function(config){
+          // request配置
+          config.headers = config.headers || {};
+          config.headers.Authorization = 'hexson';
+          return config;
+        },
+        response: function(res){
+          // 请求成功配置
+          console.log('ajax success.');
+          return res;
+        },
+        responseError: function(res){
+          // 请求失败处理
+          console.log(res);
+          return res;
+        }
+      }
+    }]);
+  }
+]);</code></pre>
+
+
+</div>

@@ -1,0 +1,1 @@
+!function(){"use strict";angular.module("app").controller("configctr",["$scope","$timeout","utils",function(n,t,e){t(function(){e.hljs(angular.element(document).find("pre"))},0)}])}();

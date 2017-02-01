@@ -1,0 +1,1 @@
+!function(){"use strict";angular.module("app").controller("startctr",["$scope","$timeout","utils",function(t,l,n){t.isNullText="{{data | isNull}}",l(function(){n.hljs(angular.element(document).find("pre"))},0)}])}();
