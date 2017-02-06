@@ -1,0 +1,71 @@
+### 组件
+
+#### # 构建组件
+
+构建一些可复用的组件，减少频繁的代码复制操作等 *
+
+```javascript
+angular.module('app')
+.directive('someComponent', [function(){
+  return {
+    restrict: 'E', // 可选参数(字符串)，指明指令在DOM里面以什么形式被声明；取值有：E(元素)，A(属性)，C(类)，M(注释)，默认值为A；当然也可以两个一起用，比如EA。表示可以是元素也可以是属性。
+    priority: 0, // 可选参数(数字)，指明指令的优先级，若在单个DOM上有多个指令，则优先级高的先执行。
+    terminal: false, // 可选参数(布尔型)，可以被设置为true或false，若设置为true，则优先级低于此指令的其他指令则无效，不会被调用(优先级相同的还是会执行)
+    template: '<div>...</div>', // 可选参数(字符串或者函数)
+    templateUrl: 'someComponent.html', // 可选参数(字符串: 一个代表HTML文件路径的字符串或者函数)
+    replace: false, // 可选参数(布尔值)，默认值为false，设置为true时候，someComponent标签被替换掉，反之，则不替换。
+    scope: false, // 默认值false。表示继承父作用域；true。表示继承父作用域，并创建自己的作用域(子作用域)；{}。表示创建一个全新的隔离作用域；
+    transclude: true, // 配合ng-transclude使用，让指令内的内容被模板替换。
+    controller: 'somectr', // 一个字符串或者函数，若是为字符串，则将字符串当做是控制器的名字，来查找注册在应用中的控制器的构造函数。
+    controllerAs: 'todoctr', // 设置你的控制器别名。
+    require: 'commonComponent', // 字符串，另一个指令的名字，它将会作为link函数的第四个参数。
+    compile: function(tElement, tAttrs, transclude){ // 编译函数，是用来处理需要修改模板DOM的情况。因为大部分指令都不需要修改模板，所以这个函数不常用。
+      /* tElement - template element - 指令所在的元素。对这个元素及其子元素进行变形之类的操作是安全的。 */
+      /* tAttrs - template attributes - 这个元素上所有指令声明的属性，这些属性都是在编译函数里共享的。 */
+      /* transclude - 一个嵌入的链接函数function(scope, cloneLinkingFn)。 */
+    },
+    link: function(scope, iElement, iAttrs, controller){ // 链接函数负责注册DOM事件和更新DOM。它是在模板被克隆之后执行的，大部分指令逻辑代码编写的地方。
+      /* scope - 指令需要监听的作用域。 */
+      /* iElement - instance element - 指令所在的元素。只有在postLink函数中对元素的子元素进行操作才是安全的，因为那时它们才已经全部链接好。 */
+      /* iAttrs - instance attributes - 实例属性，一个标准化的、所有声明在当前元素上的属性列表，这些属性在所有链接函数间是共享的。 */
+      /* controller - 控制器实例，也就是当前指令通过require请求的指令direct2内部的controller。 */
+    }
+  }
+}]);
+```
+
+一个简单的分页组件例子：
+
+```javascript
+// example - pagination
+angular.module('app')
+.directive('pagination', function(){
+  return {
+    replace: true,
+    restrict: 'E',
+    templateUrl: 'components/pagination/pagination.html',
+    link: function(scope, ele, attrs){
+      // 继承父作用域 *
+      scope.prev = function(){
+        /* go to previous page */
+        scope[attrs.action](--scope.page); // parent scope getList fn: arguments: scope.page - 1
+      }
+      scope.next = function(){
+        /* go to next page */
+        scope[attrs.action](++scope.page); // parent scope getList fn: arguments: scope.page + 1
+      }
+      scope.go = function(page){
+        /* go to specific page */
+        scope[attrs.action](page); // parent scope getList fn: arguments: input page number
+      }
+    }
+  }
+});
+```
+
+```html
+<!-- 调用组件，并指定组件交互时执行的回调方法 -->
+<pagination action="getList">
+  <!-- 组件内部实现(components/pagination/pagination.html)... -->
+</pagination>
+```
