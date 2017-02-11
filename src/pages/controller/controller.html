@@ -1,0 +1,45 @@
+<div class="item-con-art" ng-controller="controllerctr">
+
+
+<h3>控制器</h3>
+<h4># 定义控制器</h4>
+<p>配合ng-controller指令定义应用程序的控制器
+
+</p>
+<pre><code class="lang-javascript">angular.module('app')
+.controller('someCTR', ['$scope', 'utils', function($scope, utils){ // 某些依赖注入
+  /* someCTR controller fnScope */
+  $scope.hi = 'Hello world!';
+  $scope.myName = function(){
+    alert('My name is hexson.');
+  };
+  /* to do something... */
+}]);</code></pre>
+<pre><code class="lang-html">&lt;!-- ng-controller指令定义一个控制器 --&gt;
+&lt;div ng-controller="someCTR"&gt;
+  &lt;span&gt;{{ hi }}&lt;/span&gt; &lt;!-- Hello world! --&gt;
+  &lt;button ng-click="myName()"&gt;click me.&lt;/button&gt; &lt;!-- $scope.myName fn: My name is hexson. --&gt;
+  &lt;!-- other html... --&gt;
+&lt;/div&gt;</code></pre>
+<p>controller继承全局事件及数据，而且可以设置别名，在作用域里用 <code>this</code> 代替 <code>$scope</code>：
+
+</p>
+<pre><code class="lang-javascript">angular.module('app')
+.controller('someCTR', [function(){ // 某些依赖注入
+  /* someCTR controller fnScope */
+  var vm = this;
+  vm.hi = 'Hello world!';
+  vm.myName = function(){
+    alert('My name is hexson.');
+  };
+  /* to do something... */
+}]);</code></pre>
+<pre><code class="lang-html">&lt;!-- ng-controller指令定义一个控制器 --&gt;
+&lt;div ng-controller="someCTR as sc"&gt;
+  &lt;span&gt;{{ sc.hi }}&lt;/span&gt; &lt;!-- Hello world! --&gt;
+  &lt;button ng-click="sc.myName()"&gt;click me.&lt;/button&gt; &lt;!-- vm.myName fn: My name is hexson. --&gt;
+  &lt;!-- other html... --&gt;
+&lt;/div&gt;</code></pre>
+
+
+</div>
