@@ -43,6 +43,11 @@
     .state('main.frame', stateConf('frame', 'pages/frame/frame.html', 'pages/frame/frame.js'))
     .state('main.frame.start', stateConf('start', 'pages/start/start.html', 'pages/start/start.js'))
     .state('main.frame.config', stateConf('config', 'pages/config/config.html', 'pages/config/config.js'))
+    .state('main.frame.run', stateConf('run', 'pages/run/run.html', 'pages/run/run.js'))
+    .state('main.frame.component', stateConf('component', 'pages/component/component.html', 'pages/component/component.js'))
+    .state('main.frame.controller', stateConf('controller', 'pages/controller/controller.html', 'pages/controller/controller.js'))
+    .state('main.frame.form', stateConf('form', 'pages/form/form.html', 'pages/form/form.js'))
+    .state('main.frame.validate', stateConf('validate', 'pages/validate/validate.html', 'pages/validate/validate.js'))
     ;
     /* state config:start */
     function stateConf(route, htmlfile, jsfiles){
