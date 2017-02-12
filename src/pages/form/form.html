@@ -1,0 +1,57 @@
+<div class="item-con-art" ng-controller="formctr">
+
+
+<h3>表单</h3>
+<h4># 表单处理</h4>
+<p>表单的数据绑定及事件处理
+
+</p>
+
+<pre><code class="lang-javascript">angular.module('app')
+.controller('someCTR', ['$scope', 'utils', function($scope, utils){ // 某些依赖注入
+  /* someCTR controller fnScope */
+  $scope.hi = 'Hello world!';
+  $scope.myName = function(){
+    alert('My name is hexson.');
+  };
+  $scope.passwordKeyup = function(e){
+    /* e =&gt; element Event Object */
+    console.log(e);
+  };
+  /* to do something... */
+}]);</code></pre>
+<pre><code class="lang-html">&lt;div ng-controller="someCTR"&gt;
+  &lt;span&gt;{{ hi }}&lt;/span&gt;
+  &lt;button ng-click="myName()"&gt;click me.&lt;/button&gt;
+  &lt;form name="signUpForm"&gt;
+    &lt;input type="text" ng-model="user.firstName" /&gt; &lt;!-- the input value &lt;=&gt; $scope.user.firstName --&gt;
+    &lt;input type="text" ng-model="user.lastName" /&gt; &lt;!-- the input value &lt;=&gt; $scope.user.lastName --&gt;
+    &lt;input type="password" ng-model="user.password" ng-keyup="passwordKeyup($event)" /&gt; &lt;!-- $event =&gt; the element Event Object --&gt;
+    &lt;!-- ng-value: 赋值，但数据不绑定 --&gt;
+    &lt;!-- ng-selected: selected 判定 --&gt;
+    &lt;!-- ng-checked: checked 判定 --&gt;
+    &lt;!-- ng-disabled: disabled 判定 --&gt;
+    &lt;!-- ng-options or ng-repeat: 遍历 list 生成选项 --&gt;
+    &lt;!-- ng-submit: 设置 submit --&gt;
+    &lt;!-- ... --&gt;
+  &lt;/form&gt;
+  &lt;!-- other html... --&gt;
+&lt;/div&gt;</code></pre>
+<p>上面简单示例的实现：</p>
+<form name="signUpForm">
+  <label>
+    <input type="text" placeholder="姓氏" ng-model="user.firstName">
+    <span>$scope.user.firstName: {{user.firstName || 'null'}}</span>
+  </label>
+  <label>
+    <input type="text" placeholder="名字" ng-model="user.lastName">
+    <span>$scope.user.lastName: {{user.lastName || 'null'}}</span>
+  </label>
+  <label>
+    <input type="password" placeholder="密码" ng-model="user.password" ng-keyup="passwordKeyup($event)">
+    <span>The element keyup fn Event keyCode: {{user.passwordEvent.keyCode || 'null'}}</span>
+  </label>
+</form>
+
+
+</div>
