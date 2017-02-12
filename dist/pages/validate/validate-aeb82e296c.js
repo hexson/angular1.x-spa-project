@@ -1,0 +1,1 @@
+!function(){"use strict";angular.module("app").controller("validatectr",["$scope","utils",function(t,n){n.hljs(angular.element(document).find("pre")),t.validate=function(t){t&&t.stopPropagation&&t.stopPropagation()}}])}();
