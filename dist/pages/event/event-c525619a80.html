@@ -1,0 +1,40 @@
+<div class="item-con-art" ng-controller="eventctr">
+
+
+<h3>事件</h3>
+<h4># 事件绑定</h4>
+<p>在处理用户交互的时候需要执行特定的事件
+
+</p>
+<pre><code class="lang-javascript">angular.module('app')
+.controller('someCTR', ['$scope', 'utils', function($scope, utils){
+  $scope.myClick = function(){
+    $scope.isHide = $scope.isHide ? false : true;
+  };
+}]);</code></pre>
+<pre><code class="lang-html">&lt;div ng-controller="someCTR"&gt;
+  &lt;span ng-hide="isHide"&gt;My name is hexson.&lt;/span&gt;
+  &lt;button ng-click="myClick()"&gt;show/hide&lt;/button&gt;
+  &lt;!-- other html... --&gt;
+&lt;/div&gt;</code></pre>
+<p>绑定事件的格式为：<code>ng-*="fnName()"</code>，如果需要获取 <code>Event Object</code>，只需传入 <code>$event</code>：<code>ng-*="fnName($event)"</code>。
+
+</p>
+<pre><code class="lang-javascript">angular.module('app')
+.controller('someCTR', ['$scope', 'utils', function($scope, utils){
+  $scope.myClick = function(e){
+    $scope.isHide = $scope.isHide ? false : true;
+    console.log(e); // print Event Object
+  };
+}]);</code></pre>
+<pre><code class="lang-html">&lt;div ng-controller="someCTR"&gt;
+  &lt;span ng-hide="isHide"&gt;My name is hexson.&lt;/span&gt;
+  &lt;button ng-click="myClick($event)"&gt;show/hide&lt;/button&gt;
+  &lt;!-- other html... --&gt;
+&lt;/div&gt;</code></pre>
+<blockquote>
+<p>注意：函数需先在当前controller内的 <code>$scope</code> 上赋值</p>
+</blockquote>
+
+
+</div>
