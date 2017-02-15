@@ -14,6 +14,7 @@
     $urlRouterProvider.otherwise('/main/index');
     $urlRouterProvider.when('/main', '/main/index');
     $urlRouterProvider.when('/main/frame', '/main/frame/start');
+    $locationProvider.hashPrefix('');
     $stateProvider.state('main', {
       url: '/main',
       views: {
@@ -48,6 +49,9 @@
     .state('main.frame.controller', stateConf('controller', 'pages/controller/controller.html', 'pages/controller/controller.js'))
     .state('main.frame.form', stateConf('form', 'pages/form/form.html', 'pages/form/form.js'))
     .state('main.frame.validate', stateConf('validate', 'pages/validate/validate.html', 'pages/validate/validate.js'))
+    .state('main.frame.event', stateConf('event', 'pages/event/event.html', 'pages/event/event.js'))
+    .state('main.frame.command', stateConf('command', 'pages/command/command.html', 'pages/command/command.js'))
+    .state('main.frame.globalapi', stateConf('globalapi', 'pages/globalapi/globalapi.html', 'pages/globalapi/globalapi.js'))
     ;
     /* state config:start */
     function stateConf(route, htmlfile, jsfiles){
