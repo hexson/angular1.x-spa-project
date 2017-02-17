@@ -129,8 +129,16 @@ blockquote {
     a {
       display: inline-block;
       color: #fff;
+      opacity: .8;
+      &:hover {
+        opacity: 1;
+      };
     }
   };
+  .active {
+    opacity: 1;
+    font-weight: 600;
+  }
 }
 .footer {
   width: @w;
@@ -152,7 +160,7 @@ blockquote {
   background-color: @hc;
   color: #fff;
 }
-.banner-con,.frame {
+.banner-con,.section {
   width: 1100px;
   margin: 0 auto;
   overflow: hidden;
@@ -204,10 +212,10 @@ blockquote {
     line-height: 30px;
   }
 }
-.frame {
+.section {
   padding: 50px 0;
 }
-.frame-nav {
+.section-nav {
   width: 200px;
   float: left;
   h3 {
@@ -217,7 +225,7 @@ blockquote {
     margin-bottom: 20px;
     color: @fc;
   }
-  .frame-nav-item {
+  .section-nav-item {
     margin-bottom: 20px;
     li {
       padding-left: 30px;
@@ -238,7 +246,7 @@ blockquote {
     }
   }
 }
-.frame-con {
+.section-con {
   margin-left: 200px;
   min-height: 550px;
 }

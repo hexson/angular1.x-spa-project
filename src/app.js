@@ -52,6 +52,7 @@
     .state('main.frame.event', stateConf('event', 'pages/event/event.html', 'pages/event/event.js'))
     .state('main.frame.command', stateConf('command', 'pages/command/command.html', 'pages/command/command.js'))
     .state('main.frame.globalapi', stateConf('globalapi', 'pages/globalapi/globalapi.html', 'pages/globalapi/globalapi.js'))
+    .state('main.plugin', stateConf('plugin', 'pages/plugin/plugin.html', 'pages/plugin/plugin.js'))
     ;
     /* state config:start */
     function stateConf(route, htmlfile, jsfiles){
