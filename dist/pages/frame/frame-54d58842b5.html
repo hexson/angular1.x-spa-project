@@ -1,8 +1,8 @@
 <div ng-controller="framectr">
-  <div class="frame">
-    <div class="frame-nav">
+  <div class="section">
+    <div class="section-nav">
       <ul>
-        <li class="frame-nav-item">
+        <li class="section-nav-item">
           <h3>准备开始</h3>
           <ul>
             <li><a ui-sref="main.frame.start" ui-sref-active="active">起步</a></li>
@@ -10,21 +10,21 @@
             <li><a ui-sref="main.frame.run" ui-sref-active="active">初始化</a></li>
           </ul>
         </li>
-        <li class="frame-nav-item">
+        <li class="section-nav-item">
           <h3>控制器和组件</h3>
           <ul>
             <li><a ui-sref="main.frame.controller" ui-sref-active="active">控制器</a></li>
             <li><a ui-sref="main.frame.component" ui-sref-active="active">组件</a></li>
           </ul>
         </li>
-        <li class="frame-nav-item">
+        <li class="section-nav-item">
           <h3>表单及验证</h3>
           <ul>
             <li><a ui-sref="main.frame.form" ui-sref-active="active">表单</a></li>
             <li><a ui-sref="main.frame.validate" ui-sref-active="active">表单验证</a></li>
           </ul>
         </li>
-        <li class="frame-nav-item">
+        <li class="section-nav-item">
           <h3>事件指令和API</h3>
           <ul>
             <li><a ui-sref="main.frame.event" ui-sref-active="active">事件</a></li>
@@ -34,6 +34,6 @@
         </li>
       </ul>
     </div>
-    <div ui-view class="frame-con"></div>
+    <div ui-view class="section-con"></div>
   </div>
 </div>
