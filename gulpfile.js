@@ -111,12 +111,21 @@ gulp.task('concat:appjs', function(){
 });
 
 gulp.task('uglify:concat:appjs', ['copy:hash:html', 'uglify:pagejs'], function(){
-  gulp.src(['src/app.config.js', 'src/app.js', 'src/app.filter.js', 'src/app.services.js'])
+  return gulp.src(['src/app.config.js', 'src/app.js', 'src/app.filter.js', 'src/app.services.js'])
       .pipe(uglify())
       .pipe(concat('app.js'))
       .pipe(modify(version))
       .pipe(revReplace({manifest: gulp.src('./rev-manifest.json')}))
+      .pipe(rev())
+      .pipe(gulp.dest('dist/'))
+      .pipe(rev.manifest('app-manifest.json'))
       .pipe(gulp.dest('dist/'));
+});
+
+gulp.task('revReplace:index', ['uglify:concat:appjs'], function(){
+  gulp.src('./index.html')
+      .pipe(revReplace({manifest: gulp.src('dist/app-manifest.json')}))
+      .pipe(gulp.dest('./'));
 });
 
 gulp.task('copy:pagejs', function(){
@@ -158,7 +167,7 @@ gulp.task('watch', function(){
 var taskList = ['copy:lib', 'imagemin'];
 
 if (isProd){
-  taskList.push('copy:hash:html', 'css:less:uglifycss', 'uglify:concat:appjs', 'uglify:pagejs');
+  taskList.push('copy:hash:html', 'css:less:uglifycss', 'uglify:concat:appjs', 'uglify:pagejs', 'revReplace:index');
 }else {
   taskList.push('copy:html', 'css:less', 'concat:appjs', 'copy:pagejs', 'server', 'watch');
 }
