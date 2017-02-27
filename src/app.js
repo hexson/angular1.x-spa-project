@@ -11,9 +11,13 @@
     'config'
   ])
   .config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$ocLazyLoadProvider', '$httpProvider', '$compileProvider', 'statics', function($stateProvider, $urlRouterProvider, $locationProvider, $ocLazyLoadProvider, $httpProvider, $compileProvider, statics){
+    // $ocLazyLoadProvider.config({
+    //   debug: true
+    // });
     $urlRouterProvider.otherwise('/main/index');
     $urlRouterProvider.when('/main', '/main/index');
     $urlRouterProvider.when('/main/frame', '/main/frame/start');
+    $urlRouterProvider.when('/main/plugin', '/main/plugin/lazyload');
     $locationProvider.hashPrefix('');
     $stateProvider.state('main', {
       url: '/main',
@@ -31,7 +35,7 @@
       resolve: {
         loadMyFile: ['$ocLazyLoad', function($ocLazyLoad){
           return $ocLazyLoad.load({
-            name: 'app',
+            // name: 'app',
             files: [
               statics.path + 'components/header/header.js',
               statics.path + 'components/footer/footer.js'
@@ -53,6 +57,10 @@
     .state('main.frame.command', stateConf('command', 'pages/command/command.html', 'pages/command/command.js'))
     .state('main.frame.globalapi', stateConf('globalapi', 'pages/globalapi/globalapi.html', 'pages/globalapi/globalapi.js'))
     .state('main.plugin', stateConf('plugin', 'pages/plugin/plugin.html', 'pages/plugin/plugin.js'))
+    .state('main.plugin.lazyload', stateConf('lazyload', 'pages/lazyload/lazyload.html', 'pages/lazyload/lazyload.js'))
+    .state('main.plugin.fileupload', stateConf('fileupload', 'pages/fileupload/fileupload.html', 'pages/fileupload/fileupload.js'))
+    .state('main.plugin.dialog', stateConf('dialog', 'pages/dialog/dialog.html', 'pages/dialog/dialog.js'))
+    .state('main.plugin.toastr', stateConf('toastr', 'pages/toastr/toastr.html', 'pages/toastr/toastr.js'))
     ;
     /* state config:start */
     function stateConf(route, htmlfile, jsfiles){
@@ -62,7 +70,7 @@
         resolve: {
           loadMyFile: ['$ocLazyLoad', function($ocLazyLoad){
             return $ocLazyLoad.load({
-              name: 'app',
+              // name: 'app',
               files: (typeof jsfiles === 'string' ? [statics.path + jsfiles] : (jsfiles || []))
             });
           }]
