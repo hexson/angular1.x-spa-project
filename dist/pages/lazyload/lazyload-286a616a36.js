@@ -1,0 +1,1 @@
+!function(){"use strict";angular.module("app").controller("lazyloadctr",["utils",function(l){l.hljs(angular.element(document).find("pre"))}])}();

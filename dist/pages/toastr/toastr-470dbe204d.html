@@ -1,0 +1,65 @@
+<div class="item-con-art" ng-controller="toastrctr">
+
+
+<h3>消息通知</h3>
+<h4># 依赖</h4>
+<p>使用前的依赖 *
+
+</p>
+<pre><code class="lang-html">&lt;link rel="stylesheet" type="text/css" href="*url/angular-toastr.min.css" /&gt;
+&lt;script type="text/javascript" src="*url/angular-toastr.tpls.min.js"&gt;&lt;/script&gt;</code></pre>
+<pre><code class="lang-javascript">var app = angular.module('app', ['toastr']);
+
+/* 如果你想要动画效果，请添加 angular-animate */
+var app = angular.module('app', ['ngAnimate', 'toastr']);</code></pre>
+<h4># 配置</h4>
+<p>一些公用或者全局的配置
+
+</p>
+<pre><code class="lang-javascript">app.config(['toastrConfig', function(toastrConfig){
+  angular.extend(toastrConfig, {
+    closeButton: true, // 是否显示关闭按钮
+    closeHtml: '&lt;button&gt;&amp;times;&lt;/button&gt;', // 自定义关闭按钮
+    iconClasses: {
+      success: 'toast-success',
+      info: 'toast-info',
+      error: 'toast-error',
+      warning: 'toast-warning'
+    }, // 自定义提示类型的样式类
+    progressBar: true, // 是否显示关闭倒计时的进度条
+    timeOut: 2000, // 设置多久消失，单位ms
+    titleClass: 'toast-title', // 提示标题的样式类
+    toastClass: 'toast' // 提示主体的样式类
+  });
+}]);</code></pre>
+<h4># 使用</h4>
+<p>某个成功的消息通知(绿色)
+
+</p>
+<pre><code class="lang-javascript">app.controller('someCtr', ['toastr', function(toastr){
+  toastr.success('提示消息', '提示标题!');
+}]);</code></pre>
+<p>某个普通的消息通知(蓝色)
+
+</p>
+<pre><code class="lang-javascript">app.controller('someCtr', ['toastr', function(toastr){
+  toastr.info('提示消息', '提示标题!');
+}]);</code></pre>
+<p>某个错误的消息通知(红色)
+
+</p>
+<pre><code class="lang-javascript">app.controller('someCtr', ['toastr', function(toastr){
+  toastr.error('提示消息', '提示标题!');
+}]);</code></pre>
+<p>某个警告的消息通知(黄色)
+
+</p>
+<pre><code class="lang-javascript">app.controller('someCtr', ['toastr', function(toastr){
+  toastr.warning('提示消息', '提示标题!');
+}]);</code></pre>
+<blockquote>
+<p>不想显示提示标题的时候只要不传该参数就可以了</p>
+</blockquote>
+
+
+</div>

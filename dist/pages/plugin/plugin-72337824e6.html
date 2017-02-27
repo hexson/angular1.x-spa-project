@@ -1,0 +1,33 @@
+<div ng-controller="pluginctr">
+  <div class="section">
+    <div class="section-nav">
+      <ul>
+        <li class="section-nav-item">
+          <h3>懒加载</h3>
+          <ul>
+            <li><a ui-sref="main.plugin.lazyload" ui-sref-active="active">资源加载</a></li>
+          </ul>
+        </li>
+        <li class="section-nav-item">
+          <h3>文件上传</h3>
+          <ul>
+            <li><a ui-sref="main.plugin.fileupload" ui-sref-active="active">文件上传</a></li>
+          </ul>
+        </li>
+        <li class="section-nav-item">
+          <h3>会话窗口</h3>
+          <ul>
+            <li><a ui-sref="main.plugin.dialog" ui-sref-active="active">会话窗口</a></li>
+          </ul>
+        </li>
+        <li class="section-nav-item">
+          <h3>消息通知</h3>
+          <ul>
+            <li><a ui-sref="main.plugin.toastr" ui-sref-active="active">消息通知</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+    <div ui-view class="section-con"></div>
+  </div>
+</div>

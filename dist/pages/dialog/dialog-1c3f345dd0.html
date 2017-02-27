@@ -1,0 +1,123 @@
+<div class="item-con-art" ng-controller="dialogctr">
+
+
+<h3>会话窗口</h3>
+<h4># 依赖</h4>
+<p>使用前的依赖 *
+
+</p>
+<pre><code class="lang-html">&lt;link rel="stylesheet" href="*url/ngDialog.min.css"&gt;
+&lt;link rel="stylesheet" href="*url/ngDialog-theme-default.min.css"&gt;
+&lt;script src="*url/ngDialog.min.js"&gt;&lt;/script&gt;</code></pre>
+<pre><code class="lang-javascript">var app = angular.module('app', ['ngDialog']);
+
+app.config(['ngDialogProvider', function(ngDialogProvider){
+  /* 默认的一些全局配置 */
+  ngDialogProvider.setDefaults({
+    className: 'ngdialog-theme-default',
+    plain: false
+  });
+}]);</code></pre>
+<h4># 使用</h4>
+<p>一个简单示例使用
+
+</p>
+<pre><code class="lang-html">&lt;script type="text/ng-template" id="templateId"&gt;
+  &lt;h1&gt;模板标题&lt;/h1&gt;
+  &lt;p&gt;内容，模板可以自定义&lt;/p&gt;
+&lt;/script&gt;</code></pre>
+<pre><code class="lang-javascript">ngDialog.open({ template: 'templateId' });</code></pre>
+<h5>plain {Boolean}</h5>
+<pre><code class="lang-javascript">ngDialog.open({
+  template: '&lt;p&gt;你的内容&lt;/p&gt;',
+  plain: true // 设置plain为true，就可以像上面那样调用
+});</code></pre>
+<h5>controller {String} | {Array} | {Object}</h5>
+<pre><code class="lang-javascript">ngDialog.open({
+  template: 'someTemplate.html',
+  controller: 'SomeController'
+});</code></pre>
+<h5>controllerAs {String}</h5>
+<p>与 angular controller 别名一样
+
+</p>
+<h5>resolve {Object.<string, function="">}</string,></h5>
+<pre><code class="lang-javascript">ngDialog.open({
+  controller: function Ctrl(dep) { /* ... */ },
+  resolve: {
+    dep: function depFactory(){
+        return 'dep value';
+    }
+  }
+});</code></pre>
+<h5>scope {Object}</h5>
+<pre><code class="lang-javascript">$scope.value = true;
+
+ngDialog.open({
+  template: 'someTemplate',
+  className: 'ngdialog-theme-plain',
+  scope: $scope
+});</code></pre>
+<pre><code class="lang-html">&lt;script type="text/ng-template" id="someTemplate"&gt;
+  &lt;p&gt;输出 scope: &lt;code&gt;{{value}}&lt;/code&gt;&lt;/p&gt;
+&lt;/script&gt;</code></pre>
+<h5>scope.closeThisDialog(value)</h5>
+<pre><code class="lang-html">&lt;script type="text/ng-template" id="someTemplate"&gt;
+  &lt;button ng-click="closeThisDialog()"&gt;关闭窗口&lt;/button&gt;
+&lt;/script&gt;</code></pre>
+<h5>className {String}</h5>
+<pre><code class="lang-javascript">ngDialog.open({
+  template: 'someTemplate',
+  className: 'your-ngdialog-theme-class' // 你的自定义主题
+});</code></pre>
+<h5>appendClassName {String}</h5>
+<pre><code class="lang-javascript">ngDialog.open({
+  template: 'someTemplate',
+  className: 'append-ngdialog-class' // 增加一些样式
+});</code></pre>
+<h5>width {Number | String}</h5>
+<pre><code class="lang-javascript">ngDialog.open({
+  template: 'someTemplate',
+  width: '500'
+});
+/* or */
+ngDialog.open({
+  template: 'someTemplate',
+  width: '50%'
+});</code></pre>
+<h5>height {Number | String}</h5>
+<pre><code class="lang-javascript">ngDialog.open({
+  template: 'someTemplate',
+  height: '500'
+});
+/* or */
+ngDialog.open({
+  template: 'someTemplate',
+  height: '50%'
+});</code></pre>
+<h4># Returns</h4>
+<p>当你调用 <code>open()</code> 方法时，会返回一个对象和一些有用的信息
+
+</p>
+<h5>id {String}</h5>
+<p>会返回一个当前会话的 <code>id</code>
+
+</p>
+<h5>close(value) {Function}</h5>
+<p>会返回一个 <code>close</code> 的方法去让你在某个时候关闭窗口
+
+</p>
+<h5>closePromise {Promise}</h5>
+<p>会返回一个关闭会话窗口时的回调方法
+
+</p>
+<pre><code class="lang-javascript">var dialog = ngDialog.open({
+  template: 'someTemplate'
+});
+
+dialog.closePromise.then(function(data){
+  console.log(data.id + ' 会话窗口被关闭了');
+});</code></pre>
+
+
+</div>
