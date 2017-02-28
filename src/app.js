@@ -10,7 +10,7 @@
     'toastr',
     'config'
   ])
-  .config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$ocLazyLoadProvider', '$httpProvider', '$compileProvider', 'statics', function($stateProvider, $urlRouterProvider, $locationProvider, $ocLazyLoadProvider, $httpProvider, $compileProvider, statics){
+  .config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$ocLazyLoadProvider', '$httpProvider', '$compileProvider', 'statics', 'routes', function($stateProvider, $urlRouterProvider, $locationProvider, $ocLazyLoadProvider, $httpProvider, $compileProvider, statics, routes){
     // $ocLazyLoadProvider.config({
     //   debug: true
     // });
@@ -35,7 +35,6 @@
       resolve: {
         loadMyFile: ['$ocLazyLoad', function($ocLazyLoad){
           return $ocLazyLoad.load({
-            // name: 'app',
             files: [
               statics.path + 'components/header/header.js',
               statics.path + 'components/footer/footer.js'
@@ -44,40 +43,66 @@
         }]
       }
     })
-    .state('main.index', stateConf('index', 'pages/index/index.html', 'pages/index/index.js'))
-    .state('main.frame', stateConf('frame', 'pages/frame/frame.html', 'pages/frame/frame.js'))
-    .state('main.frame.start', stateConf('start', 'pages/start/start.html', 'pages/start/start.js'))
-    .state('main.frame.config', stateConf('config', 'pages/config/config.html', 'pages/config/config.js'))
-    .state('main.frame.run', stateConf('run', 'pages/run/run.html', 'pages/run/run.js'))
-    .state('main.frame.component', stateConf('component', 'pages/component/component.html', 'pages/component/component.js'))
-    .state('main.frame.controller', stateConf('controller', 'pages/controller/controller.html', 'pages/controller/controller.js'))
-    .state('main.frame.form', stateConf('form', 'pages/form/form.html', 'pages/form/form.js'))
-    .state('main.frame.validate', stateConf('validate', 'pages/validate/validate.html', 'pages/validate/validate.js'))
-    .state('main.frame.event', stateConf('event', 'pages/event/event.html', 'pages/event/event.js'))
-    .state('main.frame.command', stateConf('command', 'pages/command/command.html', 'pages/command/command.js'))
-    .state('main.frame.globalapi', stateConf('globalapi', 'pages/globalapi/globalapi.html', 'pages/globalapi/globalapi.js'))
-    .state('main.plugin', stateConf('plugin', 'pages/plugin/plugin.html', 'pages/plugin/plugin.js'))
-    .state('main.plugin.lazyload', stateConf('lazyload', 'pages/lazyload/lazyload.html', 'pages/lazyload/lazyload.js'))
-    .state('main.plugin.fileupload', stateConf('fileupload', 'pages/fileupload/fileupload.html', 'pages/fileupload/fileupload.js'))
-    .state('main.plugin.dialog', stateConf('dialog', 'pages/dialog/dialog.html', 'pages/dialog/dialog.js'))
-    .state('main.plugin.toastr', stateConf('toastr', 'pages/toastr/toastr.html', 'pages/toastr/toastr.js'))
+    .state('main.index', stateConf('index'))
+    .state('main.frame', stateConf('frame'))
+    .state('main.frame.start', stateConf('start'))
+    .state('main.frame.config', stateConf('config'))
+    .state('main.frame.run', stateConf('run'))
+    .state('main.frame.component', stateConf('component'))
+    .state('main.frame.controller', stateConf('controller'))
+    .state('main.frame.form', stateConf('form'))
+    .state('main.frame.validate', stateConf('validate'))
+    .state('main.frame.event', stateConf('event'))
+    .state('main.frame.command', stateConf('command'))
+    .state('main.frame.globalapi', stateConf('globalapi'))
+    .state('main.plugin', stateConf('plugin'))
+    .state('main.plugin.lazyload', stateConf('lazyload'))
+    .state('main.plugin.fileupload', stateConf('fileupload'))
+    .state('main.plugin.dialog', stateConf('dialog'))
+    .state('main.plugin.toastr', stateConf('toastr'))
     ;
     /* state config:start */
     function stateConf(route, htmlfile, jsfiles){
+      if (routes[route]){
+        if (routes[route] instanceof Array && routes[route].length === 2){
+          htmlfile = htmlfile || routes[route][0];
+          jsfiles = jsfiles || routes[route][1];
+        }else {
+          throw new Error('The ' + route + '\'s route template config error! It must be an Array and length === 2.');
+        }
+      }else {
+        throw new Error('The ' + route + ' route not template config!');
+      }
       return {
         url: '/' + route,
         templateUrl: statics.path + htmlfile,
         resolve: {
           loadMyFile: ['$ocLazyLoad', function($ocLazyLoad){
             return $ocLazyLoad.load({
-              // name: 'app',
               files: (typeof jsfiles === 'string' ? [statics.path + jsfiles] : (jsfiles || []))
             });
           }]
-        }
+        },
+        onExit: ['$rootScope', function($rootScope){
+          $rootScope.footerIsShow = false;
+        }]
       };
     };
     /* state config:end */
+    $httpProvider.interceptors.push(['$rootScope', function($rootScope){
+      return {
+        request: function(req){
+          var md = req.url.match(/[a-zA-Z0-9]+\.html/)[0].replace('.html', '');
+          if (md !== 'frame' && md !== 'plugin' && routes[md]) $rootScope.openTransition = md;
+          return req;
+        },
+        response: function(res){
+          $rootScope.footerIsShow = !!$rootScope.openTransition;
+          console.log($rootScope.footerIsShow, $rootScope.openTransition);
+          return res;
+        }
+      }
+    }]);
   }])
   .run(['$rootScope', function($rootScope){
     function log(){
