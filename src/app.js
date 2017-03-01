@@ -82,10 +82,7 @@
               files: (typeof jsfiles === 'string' ? [statics.path + jsfiles] : (jsfiles || []))
             });
           }]
-        },
-        onExit: ['$rootScope', function($rootScope){
-          $rootScope.footerIsShow = false;
-        }]
+        }
       };
     };
     /* state config:end */
@@ -94,11 +91,11 @@
         request: function(req){
           var md = req.url.match(/[a-zA-Z0-9]+\.html/)[0].replace('.html', '');
           if (md !== 'frame' && md !== 'plugin' && routes[md]) $rootScope.openTransition = md;
+          $rootScope.footerIsShow = false;
           return req;
         },
         response: function(res){
           $rootScope.footerIsShow = !!$rootScope.openTransition;
-          console.log($rootScope.footerIsShow, $rootScope.openTransition);
           return res;
         }
       }
