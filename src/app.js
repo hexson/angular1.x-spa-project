@@ -89,7 +89,7 @@
     $httpProvider.interceptors.push(['$rootScope', function($rootScope){
       return {
         request: function(req){
-          var md = req.url.match(/[a-zA-Z0-9]+\.html/)[0].replace('.html', '');
+          var md = req.url.match(/[a-zA-Z0-9-]+\.html/)[0].replace('.html', '');
           if (md !== 'frame' && md !== 'plugin' && routes[md]) $rootScope.openTransition = md;
           else $rootScope.openTransition = false;
           $rootScope.footerIsShow = false;
