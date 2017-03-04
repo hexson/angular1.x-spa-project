@@ -90,6 +90,7 @@
       return {
         request: function(req){
           var md = req.url.match(/[a-zA-Z0-9-]+\.html/)[0].replace('.html', '');
+          console.log(md);
           if (md !== 'frame' && md !== 'plugin' && routes[md]) $rootScope.openTransition = md;
           else $rootScope.openTransition = false;
           $rootScope.footerIsShow = false;
