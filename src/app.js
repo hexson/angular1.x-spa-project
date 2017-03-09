@@ -23,21 +23,21 @@
       url: '/main',
       views: {
         '': {
-          templateUrl: statics.path + 'pages/main/main.html'
+          templateUrl: statics.path + 'pages/main.html'
         },
         '@header': {
-          templateUrl: statics.path + 'components/header/header.html'
+          templateUrl: statics.path + 'components/header.html'
         },
         '@footer': {
-          templateUrl: statics.path + 'components/footer/footer.html'
+          templateUrl: statics.path + 'components/footer.html'
         }
       },
       resolve: {
         loadMyFile: ['$ocLazyLoad', function($ocLazyLoad){
           return $ocLazyLoad.load({
             files: [
-              statics.path + 'components/header/header.js',
-              statics.path + 'components/footer/footer.js'
+              statics.path + 'components/header.js',
+              statics.path + 'components/footer.js'
             ]
           });
         }]
@@ -60,6 +60,7 @@
     .state('main.plugin.fileupload', stateConf('fileupload'))
     .state('main.plugin.dialog', stateConf('dialog'))
     .state('main.plugin.toastr', stateConf('toastr'))
+    .state('main.plugin.storage', stateConf('storage'))
     ;
     /* state config:start */
     function stateConf(route, htmlfile, jsfiles){
