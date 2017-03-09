@@ -6,22 +6,23 @@
     path: 'dist/'
   })
   .constant('routes', {
-    index: ['pages/index/index.html', 'pages/index/index.js'],
-    frame: ['pages/frame/frame.html', 'pages/frame/frame.js'],
-    start: ['pages/start/start.html', 'pages/start/start.js'],
-    config: ['pages/config/config.html', 'pages/config/config.js'],
-    run: ['pages/run/run.html', 'pages/run/run.js'],
-    component: ['pages/component/component.html', 'pages/component/component.js'],
-    controller: ['pages/controller/controller.html', 'pages/controller/controller.js'],
-    form: ['pages/form/form.html', 'pages/form/form.js'],
-    validate: ['pages/validate/validate.html', 'pages/validate/validate.js'],
-    event: ['pages/event/event.html', 'pages/event/event.js'],
-    command: ['pages/command/command.html', 'pages/command/command.js'],
-    globalapi: ['pages/globalapi/globalapi.html', 'pages/globalapi/globalapi.js'],
-    plugin: ['pages/plugin/plugin.html', 'pages/plugin/plugin.js'],
-    lazyload: ['pages/lazyload/lazyload.html', 'pages/lazyload/lazyload.js'],
-    fileupload: ['pages/fileupload/fileupload.html', 'pages/fileupload/fileupload.js'],
-    dialog: ['pages/dialog/dialog.html', 'pages/dialog/dialog.js'],
-    toastr: ['pages/toastr/toastr.html', 'pages/toastr/toastr.js']
+    index: ['pages/index.html', 'pages/index.js'],
+    frame: ['pages/frame.html', 'pages/frame.js'],
+    start: ['pages/start.html', 'pages/start.js'],
+    config: ['pages/config.html', 'pages/config.js'],
+    run: ['pages/run.html', 'pages/run.js'],
+    controller: ['pages/controller.html', 'pages/controller.js'],
+    component: ['pages/component.html', 'pages/component.js'],
+    form: ['pages/form.html', 'pages/form.js'],
+    validate: ['pages/validate.html', 'pages/validate.js'],
+    event: ['pages/event.html', 'pages/event.js'],
+    command: ['pages/command.html', 'pages/command.js'],
+    globalapi: ['pages/globalapi.html', 'pages/globalapi.js'],
+    plugin: ['pages/plugin.html', 'pages/plugin.js'],
+    lazyload: ['pages/lazyload.html', 'pages/lazyload.js'],
+    fileupload: ['pages/fileupload.html', 'pages/fileupload.js'],
+    dialog: ['pages/dialog.html', 'pages/dialog.js'],
+    toastr: ['pages/toastr.html', 'pages/toastr.js'],
+    storage: ['pages/storage.html', 'pages/storage.js']
   });
 })();
