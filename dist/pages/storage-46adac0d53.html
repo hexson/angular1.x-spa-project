@@ -1,0 +1,51 @@
+<div class="item-con-art" ng-controller="storagectr">
+
+
+<h3>数据储存</h3>
+<h4># 依赖</h4>
+<p>使用前的依赖 *
+
+</p>
+<pre><code class="lang-html">&lt;script type="text/javascript" src="*url/ngStorage.min.js"&gt;&lt;/script&gt;</code></pre>
+<pre><code class="lang-javascript">var app = angular.module('app', ['ngStorage']);</code></pre>
+<h4># 持久储存及会话储存</h4>
+<p>持久储存及会话储存的使用
+
+</p>
+<pre><code class="lang-javascript">app.controller('someCtr', [
+  '$scope',
+  '$localStorage',
+  '$sessionStorage',
+  function($scope, $localStorage, $sessionStorage){
+    $scope.$storage = $localStorage;
+
+    /* Write localStorage (or $sessionStorage) */
+    $storage.counter = 1;
+    // or
+    $scope.$storage = $localStorage.$default({
+      counter: 1
+    });
+
+    /* Read localStorage (or $sessionStorage) */
+    console.log($storage.counter);
+
+    /* Delete localStorage (or $sessionStorage) */
+    delete $scope.$storage.counter;
+    // or
+    delete $localStorage.counter;
+
+    /* Delete all localStorage (or $sessionStorage) */
+    $localStorage.$reset();
+    // or reset counter
+    $localStorage.$reset({
+      counter: 0
+    });
+  }
+]);</code></pre>
+<blockquote>
+<p><code>$sessionStorage</code> 与 <code>$localStorage</code> 使用一致</p>
+</blockquote>
+
+
+
+</div>
